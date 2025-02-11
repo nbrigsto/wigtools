@@ -200,21 +200,8 @@ except ValueError:
 # Compute aggregate coverage while iterating through the .wig file
 master_list, counts_list = aggregate_tss_coverage(tss_file, wig_file, window_size)
 
-if fiber == 2:
-    with open("atac_max.txt", "r") as a:
-        b = int(a.readline())
-
-    if b > max(master_list):
-        with open("atac_max.txt", "w") as a:
-            a.write(f"{b}")
-else:
-    with open("fiber_max.txt", "r") as a:
-        b = int(a.readline())
-
-    if b > max(master_list):
-        with open("fiber_max.txt", "w") as a:
-            a.write(f"{b}")
-
+for i in range(0, window_size * 2 + 1):
+    master_list[i] = master_list[i] / counts_list[i]
 
 # Plot the result
 plot_aggregate_coverage(master_list, window_size, sys.argv[4])
