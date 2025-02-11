@@ -2,8 +2,6 @@ import numpy as np
 import matplotlib.pyplot as plt
 import sys
 
-fiber = None
-
 def normalize_by_max(array):
     if array.size == 0:
         return array
@@ -12,10 +10,7 @@ def normalize_by_max(array):
         return array
     return array / max_val
 
-fiber = None
-
 def aggregate_tss_coverage(bed_file, wig_file, window_size):
-    global fiber
     master = np.zeros(window_size * 2 + 1)
     temp = np.zeros(window_size * 2 + 1)
     counts = np.zeros(window_size * 2 + 1)
@@ -39,12 +34,6 @@ def aggregate_tss_coverage(bed_file, wig_file, window_size):
             while wig_line:
                 if wig_line.startswith('fixedStep') or wig_line.startswith('variableStep'):
                     header = wig_line.split()
-
-                    if not fiber:
-                        if wig_line.startswith('fixedStep'):
-                            fiber = 1
-                        else:
-                            fiber = 2
 
                     prev_chrom = wig_chrom 
                     wig_pos = None
